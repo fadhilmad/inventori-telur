@@ -15,7 +15,7 @@
                             <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control @error('tanggal_keluar') is-invalid @enderror"
+                                    <input type="date" class="form-control @error('tanggal_keluar') is-invalid @enderror"
                                         id="inputPassword3" placeholder="Nama" name="tanggal_keluar"
                                         value="{{ $keluar->tanggal_keluar }}">
                                     @error('tanggal_keluar')

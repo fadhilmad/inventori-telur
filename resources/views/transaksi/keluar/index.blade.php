@@ -11,9 +11,13 @@
             <div class="card-header">
 
                 <div class="card-tools">
+
                     <a href="{{ route('transaksi.keluar.create') }}" class="btn btn-primary" dusk="btn-tkeluar-create">
                         <i class="fas fa-plus"></i> Buat Transaksi
                     </a>
+                    <button type="button" class="btn btn-default ml-2" data-toggle="modal" data-target="#modal-default">
+                        <i class="fas fa-file-pdf"></i> Laporan
+                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -78,4 +82,34 @@
 
     </section>
     <!-- /.content -->
+    <div class="modal fade" id="modal-default" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <form action="{{ route('transaksi.keluar.laporan') }}" id="laporan-form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Laporan Pengeluaran</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Tanggal Awal</label>
+                            <input type="date" name="start" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tanggal Akhir</label>
+                            <input type="date" name="end" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Lihat</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
 @endsection

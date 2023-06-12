@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('masuk.detail', MasukDetailController::class)->only(['store', 'destroy']);
         Route::post('masuk/{masuk}/insert-stok', [MasukController::class, 'insertStok'])->name('masuk.insert-stok');
 
+        Route::get('keluar/laporan', [KeluarController::class, 'cetakLaporan'])->name('keluar.laporan');
         Route::resource('keluar', KeluarController::class);
         Route::resource('keluar.detail', KeluarDetailController::class)->only(['store',  'destroy']);
         Route::post('keluar/{keluar}/selesai', [KeluarController::class, 'selesai'])->name('keluar.selesai');

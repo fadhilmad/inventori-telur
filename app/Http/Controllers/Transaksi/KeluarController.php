@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transaksi;
 
 use DB;
 use App\Cetak\NotaKeluar;
+use App\Cetak\LaporanKeluar;
 use App\Models\TransaksiKeluar;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransaksiKeluarRequest;
@@ -11,7 +12,7 @@ use App\Http\Requests\UpdateTransaksiKeluarRequest;
 
 class KeluarController extends Controller
 {
-    use NotaKeluar;
+    use LaporanKeluar, NotaKeluar;
     /**
      * Display a listing of the resource.
      */

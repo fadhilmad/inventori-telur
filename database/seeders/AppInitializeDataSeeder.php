@@ -17,7 +17,7 @@ class AppInitializeDataSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory()->create(['username' => 'admin', 'name' => 'Administrator', 'role' => 'admin']);
+        User::factory()->create(['username' => 'admin', 'name' => 'Administrator', 'role' => 'admin']);
 
         // Suplier::factory()->create(['name' => 'Peternak']);
 

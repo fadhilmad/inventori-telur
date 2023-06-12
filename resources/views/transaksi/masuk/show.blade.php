@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="">Jumlah</label>
+                                            <label for="">Jumlah (Satuan Besar)</label>
                                             <input type="number" min="1" name="qty_satuan_besar"
                                                 class="form-control @error('qty_satuan_besar') is-invalid @enderror">
                                             @error('qty_satuan_besar')

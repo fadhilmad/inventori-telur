@@ -51,15 +51,27 @@ class KeluarController extends Controller
     public function show(TransaksiKeluar $keluar)
     {
 
-        $telurs = DB::select('select a.id, a.telur_id, b.name, a.satuan_besar, a.satuan_kecil, a.ready, b.isi_satuan_kecil from telur_stoks a join telurs b on b.id = a.telur_id');
+        $telurs = DB::select('select a.telur_id, b.name, a.satuan_besar, a.satuan_kecil, b.isi_satuan_kecil, sum(a.ready) ready from telur_stoks a join telurs b on b.id = a.telur_id group by 1,2,3,4,5');
 
         $telurs = collect($telurs);
 
-        $keluar->load('details', 'details.telur', 'details.stok');
+        $details = DB::table('transaksi_keluar_details as a')
+            ->join('telurs as b', 'b.id', '=', 'a.telur_id')
+            ->join('telur_stoks as c', 'c.id', '=', 'a.telur_stok_id')
+            ->select([
+                'a.telur_id',
+                'c.satuan_kecil',
+                'b.name',
+                DB::raw('sum(a.qty) as qty'),
+            ])
+            ->where('a.transaksi_keluar_id', $keluar->id)
+            ->groupBy(['a.telur_id', 'c.satuan_kecil'])
+            ->get();
+
 
         confirmDelete('Apakah kamu yakin akan menghapus data ini ?', 'Data yang sudah dihapus tidak dapat dikembalikan.');
 
-        return view('transaksi.keluar.show', compact('keluar', 'telurs'));
+        return view('transaksi.keluar.show', compact('keluar', 'telurs', 'details'));
     }
 
     /**

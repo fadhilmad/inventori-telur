@@ -57,7 +57,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('keluar/laporan', [KeluarController::class, 'cetakLaporan'])->name('keluar.laporan');
         Route::resource('keluar', KeluarController::class);
-        Route::resource('keluar.detail', KeluarDetailController::class)->only(['store',  'destroy']);
+        Route::resource('keluar.detail', KeluarDetailController::class)->only(['store']);
+        Route::delete('keluar/{keluar}/detail/telur/{telur}', [KeluarDetailController::class, 'destroy'])->name('keluar.detail.destroy');
         Route::post('keluar/{keluar}/selesai', [KeluarController::class, 'selesai'])->name('keluar.selesai');
         Route::get('keluar/{keluar}/print', [KeluarController::class, 'cetak'])->name('keluar.print');
 

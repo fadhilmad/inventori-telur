@@ -22,7 +22,7 @@ class StoreTransaksiKeluarDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'telur_stok_id' => 'required',
+            'telur_id' => 'required',
             'qty' => 'required'
         ];
     }

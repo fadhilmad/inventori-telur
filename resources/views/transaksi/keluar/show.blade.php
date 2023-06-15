@@ -59,17 +59,15 @@
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="transaksi_keluar_id" value="{{ $keluar->id }}">
-                                <input type="hidden" name="telur_id">
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
                                             <label for="">Telur Tersedia</label>
-                                            <select name="telur_stok_id"
+                                            <select name="telur_id"
                                                 class="form-control @error('telur_stok_id') is-invalid @enderror">
                                                 <option value="">-- Pilih Telur ---</option>
                                                 @foreach ($telurs->sortBy('name') as $telur)
-                                                    <option value="{{ $telur->id }}" data-telur="{{ $telur->telur_id }}"
-                                                        data-ready="{{ $telur->ready }}">
+                                                    <option value="{{ $telur->telur_id }}" data-ready="{{ $telur->ready }}">
                                                         {{ $telur->name }}
                                                         ({{ $telur->ready }} {{ $telur->satuan_kecil }})
                                                     </option>
@@ -121,18 +119,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($keluar->details->count() > 0)
-                                    @foreach ($keluar->details as $key => $detail)
+                                @if ($details->count() > 0)
+                                    @foreach ($details as $key => $detail)
                                         <tr>
                                             <td class="text-center">{{ $key + 1 }}</td>
-                                            <td class="text-start">{{ $detail->telur->name }}
+                                            <td class="text-start">{{ $detail->name }}
                                             </td>
                                             <td class="text-center">
-                                                {{ $detail->qty }} {{ $detail->stok->satuan_kecil }}
+                                                {{ $detail->qty }} {{ $detail->satuan_kecil }}
                                             </td>
                                             <td class="text-center">
                                                 @if ($keluar->status == 'belum')
-                                                    <a href="{{ route('transaksi.keluar.detail.destroy', ['keluar' => $keluar->id, 'detail' => $detail->id]) }}"
+                                                    <a href="{{ route('transaksi.keluar.detail.destroy', ['keluar' => $keluar->id, 'telur' => $detail->telur_id]) }}"
                                                         class="btn btn-danger btn-sm" data-confirm-delete="true"
                                                         dusk="btn-telur-delete">
                                                         <i class="fas fa-trash" data-confirm-delete="true"></i>
@@ -159,7 +157,6 @@
     <script>
         $('select[name=telur_stok_id]').on('change', function(e) {
             var dataAttributes = $(this).find('option:selected').data();
-            $('input[name=telur_id]').val(dataAttributes.telur)
             $('input[name=qty]').attr('max', dataAttributes.ready);
         })
 

@@ -2,6 +2,7 @@
 
 namespace App\Cetak;
 
+use DB;
 use App\Libraries\EasyTable\exFPDF;
 use App\Libraries\EasyTable\easyTable;
 use App\Models\TransaksiKeluar;
@@ -10,7 +11,18 @@ trait NotaKeluar
 {
     public function cetak(TransaksiKeluar $keluar)
     {
-        $keluar->load('details', 'details.telur', 'details.stok');
+        $details = DB::table('transaksi_keluar_details as a')
+            ->join('telurs as b', 'b.id', '=', 'a.telur_id')
+            ->join('telur_stoks as c', 'c.id', '=', 'a.telur_stok_id')
+            ->select([
+                'a.telur_id',
+                'c.satuan_kecil',
+                'b.name',
+                DB::raw('sum(a.qty) as qty'),
+            ])
+            ->where('a.transaksi_keluar_id', $keluar->id)
+            ->groupBy(['a.telur_id', 'c.satuan_kecil'])
+            ->get();
 
         $pdf = new exFPDF('L', 'mm', [105, 160]);
 
@@ -45,10 +57,10 @@ trait NotaKeluar
 
         $index = 1;
         $pdf->setFont('Arial', '', 8);
-        foreach ($keluar->details as $key => $detail) {
+        foreach ($details as $key => $detail) {
             $table->easyCell($index, "border: 1;align:C;");
-            $table->easyCell($detail->telur->name, "border: 1;align:L");
-            $table->easyCell($detail->qty . " " . $detail->stok->satuan_kecil, "border: 1;align:C;");
+            $table->easyCell($detail->name, "border: 1;align:L");
+            $table->easyCell($detail->qty . " " . $detail->satuan_kecil, "border: 1;align:C;");
             $table->printRow();
             $index++;
         }

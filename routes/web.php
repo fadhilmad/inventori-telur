@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('retur', ReturController::class);
         Route::resource('retur.detail', ReturDetailController::class)->only(['store',  'destroy']);
+        Route::delete('retur/{retur}/detail/telur/{telur}', [ReturDetailController::class, 'destroy'])->name('retur.detail.destroy');
         Route::post('retur/{retur}/selesai', [ReturController::class, 'selesai'])->name('retur.selesai');
     });
 });

@@ -5,6 +5,7 @@ namespace App\Cetak;
 use App\Libraries\EasyTable\exFPDF;
 use App\Libraries\EasyTable\easyTable;
 use App\Models\TransaksiKeluar;
+use DB;
 use Illuminate\Http\Request;
 
 trait LaporanKeluar
@@ -19,10 +20,25 @@ trait LaporanKeluar
             abort(403, 'Periode laporan tidak valid, silahkan cek tanggal awal dan akhir.');
         }
 
-        $keluars = TransaksiKeluar::with('details', 'details.telur', 'details.stok')
-            ->where('tanggal_keluar', '>=', $request->start)
-            ->where('tanggal_keluar', '<=', $request->end)
-            ->get();
+        $keluars = DB::select("
+            SELECT
+                b.tanggal_keluar,
+                b.tujuan,
+                c.name,
+                d.satuan_kecil,
+                SUM(a.qty) as qty
+            FROM
+                transaksi_keluar_details a
+            JOIN transaksi_keluar b
+                on b.id = a.transaksi_keluar_id and b.status = 'dikirim'
+            JOIN telurs c
+                on c.id = a.telur_id
+            JOIN telur_stoks d
+                on d.id = a.telur_stok_id
+            WHERE b.tanggal_keluar >= ? and b.tanggal_keluar <= ?
+            GROUP BY 1,2,3,4
+            ORDER BY 1 ASC
+        ", [$request->start, $request->end]);
 
         $pdf = new exFPDF();
 
@@ -51,16 +67,12 @@ trait LaporanKeluar
 
         $index = 1;
         $pdf->setFont('Arial', '', 8);
-        foreach ($keluars->sortBy('tanggal_keluar') as $key => $keluar) {
-            $table->easyCell($index, "border: 1;align:C;rowspan: {$keluar->details->count()}");
-            $table->easyCell($keluar->tanggal_keluar, "border: 1;align:C;rowspan: {$keluar->details->count()}");
-            $table->easyCell($keluar->tujuan, "border: 1;align:C;rowspan: {$keluar->details->count()}");
-            foreach ($keluar->details as $key => $detail) {
-                $table->easyCell($detail->telur->name, "border: 1;align:C;");
-                $table->easyCell(number_format($detail->qty) . " " . $detail->stok->satuan_kecil, "border: 1;align:C;");
-
-                $table->printRow();
-            }
+        foreach ($keluars as $key => $keluar) {
+            $table->easyCell($index, "border: 1;align:C;");
+            $table->easyCell($keluar->tanggal_keluar, "border: 1;align:C;");
+            $table->easyCell($keluar->tujuan, "border: 1;align:C;");
+            $table->easyCell($keluar->name, "border: 1;align:C;");
+            $table->easyCell(number_format($keluar->qty) . " " . $keluar->satuan_kecil, "border: 1;align:C;");
             $table->printRow();
             $index++;
         }

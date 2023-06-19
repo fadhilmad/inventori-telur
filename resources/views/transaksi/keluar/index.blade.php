@@ -26,6 +26,7 @@
                         <tr>
                             <th style="width: 10px" class="text-center">#</th>
                             <th class="text-center">Tanggal</th>
+                            <th class="text-center">Nama</th>
                             <th class="text-center">Tujuan</th>
                             <th class="text-center">Status</th>
                             <th style="width: 20%" class="text-center">Aksi</th>
@@ -37,6 +38,7 @@
                                 <tr>
                                     <td class="text-center">{{ $key + 1 }}</td>
                                     <td class="text-center">{{ $row->tanggal_keluar }}</td>
+                                    <td class="text-center">{{ $row->nama }}</td>
                                     <td class="text-center">{{ $row->tujuan }}</td>
                                     <td class="text-center">
                                         <span

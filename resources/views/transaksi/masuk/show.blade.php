@@ -70,7 +70,7 @@
                                 <input type="hidden" name="satuan_kecil">
                                 <input type="hidden" name="isi_satuan_kecil">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Telur</label>
                                             <select name="telur_id"
@@ -101,12 +101,28 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="">Satuan</label>
+                                            <select class="form-control">
+                                                <option value="">--
+                                                    Pilih Satuan ---</option>
+                                                <option value="">Ikat</option>
+                                                <option value="">Kg</option>
+                                                <option value="">Biji</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-1">
                                         <label for="" style="color: white">Button</label> <br>
                                         <button class="btn btn-primary  btn-icon" type="submit">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
+
+
                                 </div>
 
                             </form>

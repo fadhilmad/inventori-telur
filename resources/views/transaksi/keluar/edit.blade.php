@@ -24,6 +24,16 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        id="inputPassword3" placeholder="nama" name="nama" value="{{ $keluar->nama }}">
+                                    @error('nama')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Tujuan</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('tujuan') is-invalid @enderror"

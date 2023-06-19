@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transaksi_keluar', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_keluar');
+            $table->string('nama');
             $table->string('tujuan');
             $table->enum('status', ['dikirim', 'belum'])->default('belum');
             $table->timestamps();

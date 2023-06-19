@@ -22,6 +22,7 @@ trait LaporanKeluar
 
         $keluars = DB::select("
             SELECT
+                b.nama,
                 b.tanggal_keluar,
                 b.tujuan,
                 c.name,
@@ -59,6 +60,7 @@ trait LaporanKeluar
 
         $table = new easyTable($pdf, "{10, 20, 30, 70, 30}", 'border:1;width:100%');
         $table->easyCell("No", "border: 1;align:C;");
+        $table->easyCell("Nama", "border: 1;align:C;");
         $table->easyCell("Tanggal", "border: 1;align:C;");
         $table->easyCell("Tujuan", "border: 1;align:C");
         $table->easyCell("Item", "border: 1;align:C");
@@ -69,6 +71,7 @@ trait LaporanKeluar
         $pdf->setFont('Arial', '', 8);
         foreach ($keluars as $key => $keluar) {
             $table->easyCell($index, "border: 1;align:C;");
+            $table->easyCell($keluar->nama, "border: 1;align:C;");
             $table->easyCell($keluar->tanggal_keluar, "border: 1;align:C;");
             $table->easyCell($keluar->tujuan, "border: 1;align:C;");
             $table->easyCell($keluar->name, "border: 1;align:C;");

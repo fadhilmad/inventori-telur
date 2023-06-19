@@ -24,6 +24,17 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        id="inputPassword3" placeholder="Nama" name="tanggal_keluar"
+                                        value="{{ $keluar->nama }}" disabled>
+                                    @error('nama')
+                                        <span class="error invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Tujuan</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control @error('tujuan') is-invalid @enderror"
@@ -67,7 +78,8 @@
                                                 class="form-control @error('telur_stok_id') is-invalid @enderror">
                                                 <option value="">-- Pilih Telur ---</option>
                                                 @foreach ($telurs->sortBy('name') as $telur)
-                                                    <option value="{{ $telur->telur_id }}" data-ready="{{ $telur->ready }}">
+                                                    <option value="{{ $telur->telur_id }}"
+                                                        data-ready="{{ $telur->ready }}">
                                                         {{ $telur->name }}
                                                         ({{ $telur->ready }} {{ $telur->satuan_kecil }})
                                                     </option>

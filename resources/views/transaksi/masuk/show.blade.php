@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
-                                            <label for="">Jumlah (Satuan Besar)</label>
+                                            <label for="">Jumlah</label>
                                             <input type="number" min="1" name="qty_satuan_besar"
                                                 class="form-control @error('qty_satuan_besar') is-invalid @enderror">
                                             @error('qty_satuan_besar')
@@ -105,13 +105,8 @@
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label for="">Satuan</label>
-                                            <select class="form-control">
-                                                <option value="">--
-                                                    Pilih Satuan ---</option>
-                                                <option value="">Ikat</option>
-                                                <option value="">Kg</option>
-                                                <option value="">Biji</option>
-                                            </select>
+                                            <input type="text" name="satuan_besar_label" class="form-control"
+                                                disabled="true">
                                         </div>
                                     </div>
 
@@ -192,6 +187,7 @@
             $('input[name=satuan_besar]').val(dataAttributes.satuanBesar)
             $('input[name=satuan_kecil]').val(dataAttributes.satuanKecil)
             $('input[name=isi_satuan_kecil]').val(dataAttributes.isiSatuan)
+            $('input[name=satuan_besar_label]').val(dataAttributes.satuanBesar);
         })
 
         function confirmStok() {

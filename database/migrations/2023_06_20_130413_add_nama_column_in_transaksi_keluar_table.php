@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi_returs', function (Blueprint $table) {
-            $table->id();
-            $table->date('tanggal_retur');
-            $table->string('alasan');
-            $table->enum('status', ['dikonfirmasi', 'belum'])->default('belum');
-            $table->timestamps();
+        Schema::table('transaksi_keluar', function (Blueprint $table) {
+            $table->string('nama')->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksi_returs');
+        Schema::table('transaksi_keluar', function (Blueprint $table) {
+            $table->dropColumn(['nama']);
+        });
     }
 };

@@ -71,15 +71,15 @@
                                 @csrf
                                 <input type="hidden" name="transaksi_keluar_id" value="{{ $keluar->id }}">
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label for="">Telur Tersedia</label>
                                             <select name="telur_id"
                                                 class="form-control @error('telur_stok_id') is-invalid @enderror">
                                                 <option value="">-- Pilih Telur ---</option>
                                                 @foreach ($telurs->sortBy('name') as $telur)
-                                                    <option value="{{ $telur->telur_id }}"
-                                                        data-ready="{{ $telur->ready }}">
+                                                    <option value="{{ $telur->telur_id }}" data-ready="{{ $telur->ready }}"
+                                                        data-satuan-kecil="{{ $telur->satuan_kecil }}">
                                                         {{ $telur->name }}
                                                         ({{ $telur->ready }} {{ $telur->satuan_kecil }})
                                                     </option>
@@ -98,6 +98,13 @@
                                             @error('qty')
                                                 <span class="error invalid-feedback">{{ $message }}</span>
                                             @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="">Satuan</label>
+                                            <input type="text" name="satuan_kecil_label" class="form-control"
+                                                disabled="true">
                                         </div>
                                     </div>
                                     <div class="col-1">
@@ -167,9 +174,12 @@
 
 @section('js-custom')
     <script>
-        $('select[name=telur_stok_id]').on('change', function(e) {
+        $('select[name=telur_id]').on('change', function(e) {
             var dataAttributes = $(this).find('option:selected').data();
+
+            // debugging : console.log(dataAttributes);
             $('input[name=qty]').attr('max', dataAttributes.ready);
+            $('input[name=satuan_kecil_label]').val(dataAttributes.satuanKecil);
         })
 
         function confirmSelesai() {

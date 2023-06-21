@@ -42,6 +42,10 @@ trait NotaKeluar
         $table->easyCell("Tanggal", "width: 40%;border: 0;");
         $table->easyCell(":", "border: 0;");
         $table->easyCell($keluar->tanggal_keluar, "border: 0;");
+        $table->easyCell("Nama", "border: 0;");
+        $table->easyCell(":", "border: 0;");
+        $table->easyCell($keluar->nama ?? '-', "border: 0;");
+        $table->printRow();
         $table->easyCell("Tujuan", "border: 0;");
         $table->easyCell(":", "border: 0;");
         $table->easyCell($keluar->tujuan, "border: 0;");

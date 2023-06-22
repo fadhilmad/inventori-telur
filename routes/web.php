@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stok-telur', [TelurStokController::class, 'index'])->name('stok.index');
 
     Route::group(['prefix' => 'transaksi', 'as' => 'transaksi.'], function () {
+        Route::get('masuk/laporan', [MasukController::class, 'cetakLaporan'])->name('masuk.laporan');
         Route::resource('masuk', MasukController::class);
         Route::resource('masuk.detail', MasukDetailController::class)->only(['store', 'destroy']);
         Route::post('masuk/{masuk}/insert-stok', [MasukController::class, 'insertStok'])->name('masuk.insert-stok');

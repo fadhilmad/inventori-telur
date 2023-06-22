@@ -58,7 +58,7 @@ trait LaporanKeluar
         $pdf->setFont('Arial', 'B', 8);
 
 
-        $table = new easyTable($pdf, "{10, 20, 30, 70, 30}", 'border:1;width:100%');
+        $table = new easyTable($pdf, "{10, 20, 30, 50, 30, 20}", 'border:1;width:100%');
         $table->easyCell("No", "border: 1;align:C;");
         $table->easyCell("Nama", "border: 1;align:C;");
         $table->easyCell("Tanggal", "border: 1;align:C;");

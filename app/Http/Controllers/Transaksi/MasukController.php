@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaksi;
 
 use DB;
+use App\Cetak\LaporanMasuk;
 use App\Models\Suplier;
 use App\Http\Controllers\Controller;
 use App\Models\TransaksiMasuk;
@@ -14,6 +15,7 @@ use Log;
 
 class MasukController extends Controller
 {
+    use LaporanMasuk;
     /**
      * Display a listing of the resource.
      */
